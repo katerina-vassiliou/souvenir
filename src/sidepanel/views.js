@@ -1,6 +1,6 @@
 import { $ } from './dom.js'
 
-const VIEWS = ['list', 'detail', 'settings', 'help']
+const VIEWS = ['list', 'detail', 'settings', 'help', 'whatsnew']
 
 export function showView(name) {
   for (const view of VIEWS) $(view).hidden = view !== name
