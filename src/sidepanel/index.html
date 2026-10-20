@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Souvenir</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="list">
+      <header>
+        <div>
+          <h1><img src="../../icons/32.png" alt="" />Souvenirs</h1>
+          <p id="count"></p>
+        </div>
+        <div class="tools">
+          <div class="seg" role="group" aria-label="Layout" id="layout" hidden>
+            <button type="button" data-cols="1" aria-label="One column" title="One column">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+              >
+                <rect x="2.5" y="2.5" width="11" height="4.5" rx="1" />
+                <rect x="2.5" y="9" width="11" height="4.5" rx="1" />
+              </svg>
+            </button>
+            <button type="button" data-cols="2" aria-label="Two columns" title="Two columns">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+              >
+                <rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" />
+                <rect x="9" y="2.5" width="4.5" height="4.5" rx="1" />
+                <rect x="2.5" y="9" width="4.5" height="4.5" rx="1" />
+                <rect x="9" y="9" width="4.5" height="4.5" rx="1" />
+              </svg>
+            </button>
+          </div>
+          <button id="clear" type="button" hidden>Clear all</button>
+          <button id="settingsBtn" type="button" class="icon-plain" aria-label="Settings" title="Settings">
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            >
+              <path d="M2.5 4.5h6M11.5 4.5h2M2.5 11.5h2M7.5 11.5h6" />
+              <circle cx="10" cy="4.5" r="1.6" />
+              <circle cx="6" cy="11.5" r="1.6" />
+            </svg>
+          </button>
+          <button id="helpBtn" type="button" class="icon-plain" aria-label="Help" title="Help">
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="8" cy="8" r="6" />
+              <path d="M6.2 6.3a1.9 1.9 0 0 1 3.6.7c0 1.2-1.8 1.4-1.8 2.6" />
+              <path d="M8 11.5v.01" />
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div class="search" id="searchWrap" hidden>
+        <input id="search" type="search" placeholder="Search souvenirs" aria-label="Search souvenirs" />
+      </div>
+      <main id="collection"></main>
+      <p id="none" hidden>No souvenirs match.</p>
+      <section id="empty" hidden>
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true">
+          <path
+            d="M8 8h32v20l-12 12H8z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M40 28H31a3 3 0 0 0-3 3v9"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <p>No souvenirs yet</p>
+        <small
+          >Right-click anything on a page and choose <b>Collect element</b>, then
+          <b>Keep in collection</b>.</small
+        >
+      </section>
+    </div>
+
+    <div id="detail" hidden>
+      <header class="bar">
+        <button id="back" type="button" class="ghost" aria-label="Back to the collection">
+          <svg
+            viewBox="0 0 16 16"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 3 5 8l5 5" />
+          </svg>
+          Collection
+        </button>
+        <button id="remove" type="button" class="ghost danger">Remove</button>
+      </header>
+      <div class="namebar">
+        <input id="name" type="text" maxlength="80" autocomplete="off" aria-label="Souvenir name" />
+      </div>
+      <div class="stage"><img id="big" alt="" draggable="true" /></div>
+      <p class="note">The stamp edge is only for display. Copies stay plain.</p>
+      <div class="buttons">
+        <button id="copy" type="button" class="primary">Copy image</button>
+        <button id="download" type="button">Download</button>
+      </div>
+      <section id="palette" class="palette" hidden>
+        <div class="palette-head">
+          <b>Palette</b>
+          <button
+            id="copyPalette"
+            type="button"
+            class="icon-plain"
+            aria-label="Copy palette as JSON"
+            title="Copy palette as JSON"
+          ></button>
+        </div>
+        <div id="swatches" class="swatches"></div>
+      </section>
+      <dl id="facts"></dl>
+    </div>
+
+    <div id="settings" hidden>
+      <header class="bar">
+        <button id="settingsBack" type="button" class="ghost" aria-label="Back to the collection">
+          <svg
+            viewBox="0 0 16 16"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 3 5 8l5 5" />
+          </svg>
+          Collection
+        </button>
+      </header>
+      <div class="doc">
+        <h2>Settings</h2>
+        <div class="row">
+          <div>
+            <b>Add every souvenir to the collection</b><small>Skips the “Keep in collection” step.</small>
+          </div>
+          <button
+            id="autoKeep"
+            type="button"
+            class="switch"
+            role="switch"
+            aria-checked="false"
+            aria-label="Add every souvenir to the collection"
+          >
+            <span></span>
+          </button>
+        </div>
+        <div class="field">
+          <b>Capture method</b
+          ><small>Smart tries a fast render first and uses a screenshot when needed.</small>
+          <div class="seg wide" id="methodSeg" role="group" aria-label="Capture method">
+            <button type="button" data-v="auto">Smart</button>
+            <button type="button" data-v="render">Render</button>
+            <button type="button" data-v="screenshot">Screenshot</button>
+          </div>
+        </div>
+        <div class="field">
+          <b>Background</b><small>Behind the element, for pasting onto any page.</small>
+          <div class="seg wide" id="bgSeg" role="group" aria-label="Background">
+            <button type="button" data-v="transparent">Transparent</button>
+            <button type="button" data-v="white">White</button>
+            <button type="button" data-v="dark">Dark</button>
+          </div>
+        </div>
+        <div class="field">
+          <b>Padding</b><small>Space around the element.</small>
+          <div class="seg wide" id="padSeg" role="group" aria-label="Padding">
+            <button type="button" data-v="0">None</button>
+            <button type="button" data-v="8">8 px</button>
+            <button type="button" data-v="16">16 px</button>
+            <button type="button" data-v="24">24 px</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="help" hidden>
+      <header class="bar">
+        <button id="helpBack" type="button" class="ghost" aria-label="Back to the collection">
+          <svg
+            viewBox="0 0 16 16"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 3 5 8l5 5" />
+          </svg>
+          Collection
+        </button>
+      </header>
+      <div class="doc">
+        <h2>Collect anything from a page</h2>
+        <p class="lead">Turn any container into an image on your clipboard, then keep the best ones here.</p>
+        <ol class="steps">
+          <li>
+            <b>Start.</b> Right-click an element and choose <em>Collect element</em>, or press
+            <kbd id="keyHint">⌘⇧E</kbd> with the pointer over it.
+          </li>
+          <li>
+            <b>Choose.</b> Move the pointer to highlight a container. Press <kbd>↑</kbd> for the parent or
+            <kbd>↓</kbd> to go back.
+          </li>
+          <li>
+            <b>Collect.</b> Click or press <kbd>Enter</kbd>. It’s copied, ready to paste.
+            <kbd>Esc</kbd> cancels.
+          </li>
+          <li><b>Keep.</b> Choose <em>Keep in collection</em> on the message that appears.</li>
+        </ol>
+        <h3>In your collection</h3>
+        <ul class="tips">
+          <li>Click a souvenir to see where it came from, its size and when you collected it.</li>
+          <li>Drag a souvenir straight into Figma, Slack, a doc or an email.</li>
+          <li>Rounded corners stay transparent.</li>
+          <li>Souvenirs stay in this browser and are never uploaded.</li>
+        </ul>
+        <button id="shortcuts" type="button" class="link">Change the shortcut</button>
+        <p class="credit">
+          Made by
+          <a
+            href="https://katerinavassiliou.xyz/?utm_source=extension&amp;utm_medium=souvenir"
+            target="_blank"
+            rel="noopener"
+            >Katerina Vassiliou</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

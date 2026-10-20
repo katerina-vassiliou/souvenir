@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Souvenir",
+  "version": "1.1.0",
+  "description": "Collect any part of a web page as an image, and keep your favourites in a collection.",
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "clipboardWrite",
+    "storage",
+    "unlimitedStorage",
+    "sidePanel",
+    "scripting"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_title": "Open your collection",
+    "default_icon": {
+      "16": "icons/16.png",
+      "24": "icons/24.png",
+      "32": "icons/32.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "src/sidepanel/index.html"
+  },
+  "background": {
+    "service_worker": "src/background/index.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/content/*.js", "src/content/*/*.js", "src/shared/*.js", "vendor/*.mjs"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "pick": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Pick an element to collect"
+    }
+  }
+}

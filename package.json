@@ -1,0 +1,31 @@
+{
+  "name": "souvenir",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Collect any part of a web page as an image, and keep your favourites in a collection.",
+  "license": "MIT",
+  "author": "Katerina Vassiliou",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test",
+    "check": "npm run lint && npm run format:check && npm test",
+    "package": "node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katerina-vassiliou/souvenir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/katerina-vassiliou/souvenir/issues"
+  },
+  "homepage": "https://github.com/katerina-vassiliou/souvenir#readme"
+}
