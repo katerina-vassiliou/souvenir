@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "test": "node --test",
     "check": "npm run lint && npm run format:check && npm test",
-    "package": "node scripts/package.mjs"
+    "package": "node scripts/package.mjs",
+    "package:firefox": "node scripts/package.mjs --firefox"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

@@ -9,7 +9,11 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({ id: MENU_ID, title: 'Collect element', contexts: ['all'] })
 })
 
-chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {})
+if (chrome.sidePanel) {
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {})
+} else {
+  chrome.action.onClicked.addListener(() => browser.sidebarAction.toggle())
+}
 
 function flagFailure(tabId) {
   chrome.action.setBadgeBackgroundColor({ tabId, color: '#e5484d' })
@@ -24,7 +28,9 @@ function flagFailure(tabId) {
 async function loadContentScript(tabId) {
   await chrome.scripting.executeScript({
     target: { tabId },
-    func: url => import(url),
+    func: async url => {
+      await import(url)
+    },
     args: [chrome.runtime.getURL(CONTENT_ENTRY)],
   })
 }
@@ -68,7 +74,8 @@ const handlers = {
     return { ok: true }
   },
   async [Message.OPEN_COLLECTION](_message, sender) {
-    await chrome.sidePanel.open({ windowId: sender.tab.windowId })
+    if (chrome.sidePanel) await chrome.sidePanel.open({ windowId: sender.tab.windowId })
+    else await browser.sidebarAction.open()
     return { ok: true }
   },
 }

@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "Souvenir",
+  "version": "1.1.1",
+  "description": "Collect any part of a web page as an image, and keep your favourites in a collection.",
+  "permissions": ["activeTab", "contextMenus", "clipboardWrite", "storage", "unlimitedStorage", "scripting"],
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_title": "Open your collection",
+    "default_icon": {
+      "16": "icons/16.png",
+      "24": "icons/24.png",
+      "32": "icons/32.png"
+    }
+  },
+  "sidebar_action": {
+    "default_title": "Souvenir",
+    "default_panel": "src/sidepanel/index.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "scripts": ["src/background/index.js"],
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/content/*.js", "src/content/*/*.js", "src/shared/*.js", "vendor/*.mjs"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "pick": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Pick an element to collect"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "souvenir@katerinavassiliou.xyz",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": { "required": ["none"] }
+    }
+  }
+}
