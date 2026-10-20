@@ -1,3 +1,4 @@
+import { Message } from '../shared/messages.js'
 import { DEFAULT_SETTINGS, loadSettings, saveSettings } from '../shared/settings.js'
 import {
   clearSouvenirs,
@@ -8,6 +9,7 @@ import {
 } from '../shared/souvenirs.js'
 import { copyPalette, copySouvenir, downloadSouvenir } from './clipboard.js'
 import { $ } from './dom.js'
+import { say } from './toast.js'
 import { isShowing, showView } from './views.js'
 import { renderCollection, setColumns } from './views/collection.js'
 import { fillDetail } from './views/detail.js'
@@ -102,6 +104,15 @@ function confirmClear() {
   }, 2500)
 }
 
+async function startPicking() {
+  const reply = await chrome.runtime.sendMessage({ type: Message.PICK })
+  if (!reply?.ok)
+    say(
+      'Souvenir can’t start on this tab yet. Use the shortcut or right-click the page once, then try again.',
+      4500
+    )
+}
+
 function goBack() {
   if (isShowing('help') || isShowing('settings')) showView('list')
   else if (state.openId) closeDetail()
@@ -113,6 +124,7 @@ function bindEvents() {
     if (button) chooseColumns(Number(button.dataset.cols))
   })
   $('clear').addEventListener('click', confirmClear)
+  $('pick').addEventListener('click', startPicking)
   $('search').addEventListener('input', event => {
     state.query = event.target.value.trim()
     render()

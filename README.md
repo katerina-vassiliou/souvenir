@@ -10,7 +10,9 @@ Made by [Katerina Vassiliou](https://katerinavassiliou.xyz/?utm_source=github&ut
 
 ## Try it
 
-Souvenir has been submitted to the Chrome Web Store and is waiting for review. Until it's listed, you can load it yourself:
+Install it from the [Chrome Web Store](https://chromewebstore.google.com/detail/souvenir/dkicjffhbimipempjaihknglgkjcjfla).
+
+To load it yourself instead:
 
 1. Clone this repo, or download the zip from the [latest release](https://github.com/katerina-vassiliou/souvenir/releases/latest) and unzip it.
 2. Go to `chrome://extensions` and turn on Developer mode.

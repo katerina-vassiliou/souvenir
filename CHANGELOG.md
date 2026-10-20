@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+- Click the Souvenir logo in the side panel to start collecting an element, the same as the keyboard shortcut. If Souvenir can’t start on the current tab yet, the panel says what to do.
+- The packaged zip no longer includes macOS .DS_Store files.
+
 ## 1.1.0
 
 First release.

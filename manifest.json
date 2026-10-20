@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Souvenir",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Collect any part of a web page as an image, and keep your favourites in a collection.",
   "permissions": [
     "activeTab",

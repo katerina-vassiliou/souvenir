@@ -3,4 +3,5 @@ export const Message = Object.freeze({
   CAPTURE_TAB: 'souvenir:capture-tab',
   KEEP: 'souvenir:keep',
   OPEN_COLLECTION: 'souvenir:open-collection',
+  PICK: 'souvenir:pick',
 })

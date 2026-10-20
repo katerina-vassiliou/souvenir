@@ -80,6 +80,23 @@ h1 img {
   width: 20px;
   height: 20px;
 }
+#pick {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -4px -6px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+#pick:hover {
+  background: var(--hover);
+}
 #count {
   margin: 2px 0 0;
   color: var(--muted);
