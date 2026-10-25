@@ -14,6 +14,7 @@ import { isShowing, showView } from './views.js'
 import { renderCollection, setColumns } from './views/collection.js'
 import { fillDetail } from './views/detail.js'
 import { bindSettings, paintSettings } from './views/settings.js'
+import { renderWhatsNew } from './views/whatsnew.js'
 
 const state = {
   souvenirs: [],
@@ -68,6 +69,21 @@ function openHelp() {
   showView('help')
 }
 
+function openWhatsNew() {
+  storeFlag('souvenir-seen-version', chrome.runtime.getManifest().version)
+  $('helpBtn').classList.remove('has-update')
+  renderWhatsNew()
+  showView('whatsnew')
+}
+
+function flagUpdate() {
+  const { version } = chrome.runtime.getManifest()
+  const seen = storedFlag('souvenir-seen-version')
+  if (seen === version) return
+  if (seen === null && !storedFlag('souvenir-seen-help')) storeFlag('souvenir-seen-version', version)
+  else $('helpBtn').classList.add('has-update')
+}
+
 function renameOpenSouvenir() {
   const souvenir = find(state.openId)
   const name = $('name').value.trim()
@@ -114,7 +130,8 @@ async function startPicking() {
 }
 
 function goBack() {
-  if (isShowing('help') || isShowing('settings')) showView('list')
+  if (isShowing('whatsnew')) showView('help')
+  else if (isShowing('help') || isShowing('settings')) showView('list')
   else if (state.openId) closeDetail()
 }
 
@@ -131,6 +148,8 @@ function bindEvents() {
   })
   $('back').addEventListener('click', closeDetail)
   $('helpBack').addEventListener('click', () => showView('list'))
+  $('whatsNew').addEventListener('click', openWhatsNew)
+  $('whatsnewBack').addEventListener('click', () => showView('help'))
   $('settingsBack').addEventListener('click', () => showView('list'))
   $('helpBtn').addEventListener('click', openHelp)
   $('settingsBtn').addEventListener('click', () => showView('settings'))
@@ -176,6 +195,7 @@ async function start() {
   ;[state.souvenirs, state.settings] = await Promise.all([loadSouvenirs(), loadSettings()])
   paintSettings(state.settings)
   render()
+  flagUpdate()
   if (!storedFlag('souvenir-seen-help') && !state.souvenirs.length) openHelp()
   onSouvenirsChange(souvenirs => {
     state.souvenirs = souvenirs

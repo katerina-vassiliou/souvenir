@@ -8,7 +8,19 @@ mkdirSync('dist', { recursive: true })
 rmSync(output, { force: true })
 execFileSync(
   'zip',
-  ['-r', '-q', output, 'manifest.json', 'src', 'vendor', 'icons', 'LICENSE', '-x', '*.DS_Store'],
+  [
+    '-r',
+    '-q',
+    output,
+    'manifest.json',
+    'src',
+    'vendor',
+    'icons',
+    'LICENSE',
+    'CHANGELOG.md',
+    '-x',
+    '*.DS_Store',
+  ],
   { stdio: 'inherit' }
 )
 console.log(`Created ${output}`)

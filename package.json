@@ -1,9 +1,9 @@
 {
   "name": "souvenir",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
-  "description": "Collect any part of a web page as an image, and keep your favourites in a collection.",
+  "description": "Capture any webpage element as a transparent PNG. Copy it instantly or save it to a searchable collection.",
   "license": "MIT",
   "author": "Katerina Vassiliou",
   "scripts": {

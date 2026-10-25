@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+- See what changed in each version from the Help screen, under What’s new.
+- A clearer store listing: the extension is now called “Souvenir — Capture Web Elements as PNG”, with an updated description.
+
 ## 1.1.1
 
 - Click the Souvenir logo in the side panel to start collecting an element, the same as the keyboard shortcut. If Souvenir can’t start on the current tab yet, the panel says what to do.
