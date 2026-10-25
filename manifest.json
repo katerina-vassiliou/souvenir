@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Souvenir",
-  "version": "1.1.1",
-  "description": "Collect any part of a web page as an image, and keep your favourites in a collection.",
+  "name": "Souvenir — Capture Web Elements as PNG",
+  "version": "1.2.0",
+  "description": "Capture any webpage element as a transparent PNG. Copy it instantly or save it to a searchable collection.",
   "permissions": [
     "activeTab",
     "contextMenus",

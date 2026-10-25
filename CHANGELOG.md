@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 1.2.0
 
 - See what changed in each version from the Help screen, under What’s new.
+- A clearer store listing: the extension is now called “Souvenir — Capture Web Elements as PNG”, with an updated description.
 
 ## 1.1.1
 
