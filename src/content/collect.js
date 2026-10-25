@@ -1,5 +1,6 @@
 import { Message } from '../shared/messages.js'
 import { loadSettings } from '../shared/settings.js'
+import { MAX_IMAGE_BYTES } from '../shared/souvenirs.js'
 import { addFrame, blobToDataUrl, canvasToBlob, roundCorners, scaleDown } from './canvas.js'
 import { renderElement } from './capture/index.js'
 import { describeElement, readCornerRadii } from './dom.js'
@@ -46,6 +47,7 @@ async function makeImage(el, settings) {
 }
 
 async function keep(el, image) {
+  if (image.blob.size * 1.37 > MAX_IMAGE_BYTES) throw new Error('too-large')
   const souvenir = {
     png: await blobToDataUrl(image.blob),
     thumb: await blobToDataUrl(image.thumb),
@@ -56,8 +58,14 @@ async function keep(el, image) {
     title: document.title,
     label: describeElement(el),
   }
-  await chrome.runtime.sendMessage({ type: Message.KEEP, souvenir })
+  const reply = await chrome.runtime.sendMessage({ type: Message.KEEP, souvenir })
+  if (reply?.error) throw new Error(reply.error)
 }
+
+const keepFailure = error =>
+  error.message === 'too-large'
+    ? 'Too large to keep, but you can still copy or download it'
+    : 'Couldn’t keep that'
 
 function offerNextSteps(el, image, copied, settings) {
   const size = `${image.width} × ${image.height}`
@@ -65,8 +73,13 @@ function offerNextSteps(el, image, copied, settings) {
   const keepAction = {
     label: 'Keep in collection',
     run: async toast => {
-      await keep(el, image)
-      toast.update('Kept in your collection', [openAction], 4000)
+      try {
+        await keep(el, image)
+        toast.update('Kept in your collection', [openAction], 4000)
+      } catch (error) {
+        console.error('[Souvenir]', error)
+        toast.update(keepFailure(error), [])
+      }
     },
   }
 
@@ -91,13 +104,17 @@ export async function collect(el) {
     const settings = await loadSettings()
     const image = await makeImage(el, settings)
     const copied = await copyToClipboard(image.blob)
-    if (settings.autoKeep) await keep(el, image)
+    let keepError = null
+    if (settings.autoKeep) await keep(el, image).catch(error => (keepError = error))
 
     progress.close()
     const previewUrl = URL.createObjectURL(image.preview)
     await playLiftAnimation(el, previewUrl)
     URL.revokeObjectURL(previewUrl)
-    offerNextSteps(el, image, copied, settings)
+    if (keepError) {
+      console.error('[Souvenir]', keepError)
+      showToast(keepFailure(keepError), [])
+    } else offerNextSteps(el, image, copied, settings)
   } catch (error) {
     progress.close()
     showToast('Couldn’t collect that element')
