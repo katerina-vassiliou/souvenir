@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Souvenir now checks images before saving them to your collection, and says so when a capture is too large to keep instead of failing quietly.
+
 ## 1.2.0
 
 - See what changed in each version from the Help screen, under What’s new.
